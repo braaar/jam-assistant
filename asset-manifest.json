@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/jam-assistant/static/css/main.073c9b0a.css",
+    "main.js": "/jam-assistant/static/js/main.b5ff75a3.js",
+    "static/js/787.cfe551f5.chunk.js": "/jam-assistant/static/js/787.cfe551f5.chunk.js",
+    "static/media/logo.svg": "/jam-assistant/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "index.html": "/jam-assistant/index.html",
+    "main.073c9b0a.css.map": "/jam-assistant/static/css/main.073c9b0a.css.map",
+    "main.b5ff75a3.js.map": "/jam-assistant/static/js/main.b5ff75a3.js.map",
+    "787.cfe551f5.chunk.js.map": "/jam-assistant/static/js/787.cfe551f5.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.073c9b0a.css",
+    "static/js/main.b5ff75a3.js"
+  ]
+}
