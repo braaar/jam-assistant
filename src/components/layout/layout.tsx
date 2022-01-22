@@ -12,7 +12,7 @@ export const Layout: React.FC = ({ children }) => {
         </Box>
         <Container sx={{ flex: "1 1 auto" }}>{children}</Container>
 
-        <Box sx={{ mt: "auto" }}>
+        <Box>
           <Footer />
         </Box>
       </Flex>
