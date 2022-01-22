@@ -6,7 +6,7 @@ import { Footer } from "./footer";
 export const Layout: React.FC = ({ children }) => {
   return (
     <Box>
-      <Flex sx={{ flexDirection: "column", minHeight: "100vh" }}>
+      <Flex sx={{ flexDirection: "column", minHeight: "100vh", gap: 3 }}>
         <Box>
           <Header />
         </Box>
