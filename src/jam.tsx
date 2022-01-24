@@ -4,7 +4,7 @@ import { ChordList } from "./components/chord-list";
 import { getNewChord } from "./services/chord-helpers";
 
 export const Jam: React.FC = () => {
-  const [chords, setChords] = useState<string[]>(["Am"]);
+  const [chords, setChords] = useState<string[]>([]);
 
   const addChord = () => {
     const newChord = getNewChord(chords);
