@@ -15,7 +15,6 @@ jobs:
         with:
           node-version: 16
       - run: yarn install
-      - run: yarn lint
       - uses: sibiraj-s/action-eslint@v2
         with:
           eslint-args: '--ignore-path=.gitignore --quiet'
