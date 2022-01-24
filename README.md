@@ -1,6 +1,6 @@
 # Jam Assistant
 
-A free open-source web app that can help you come up with things to play when jamming live music.
+A free open-source web app that can help you come up with things to play when jamming live music. Can also be used for solo practice.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
