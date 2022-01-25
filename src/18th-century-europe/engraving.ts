@@ -10,6 +10,6 @@ export const CHORD_SYMBOLS: Record<Triad, string> = {
 
 export const ACCIDENTALS: Record<Accidental, string> = {
   [Accidental.NATURAL]: "",
-  [Accidental.SHARP]: "#",
+  [Accidental.SHARP]: "♯",
   [Accidental.FLAT]: "♭",
 };

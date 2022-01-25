@@ -88,12 +88,22 @@ export const getNote = (
   const baseNoteNumber = (TWENTY_ONE_NOTES[center].note + numberInScale) % 7;
 
   //check to see if the note name matches the note name we get from eleven notes
-  if (NOTE_PITCHES[baseNoteNumber] < myNotePitch) {
-    // The pitch of the base note is lower, so our note should be a sharp
+  if (addPitch(NOTE_PITCHES[baseNoteNumber], 1) === myNotePitch) {
+    // The pitch of the base note is one semitone lower, so our note should be a sharp
     return `${Note[baseNoteNumber]}${ACCIDENTALS[Accidental.SHARP]}`;
-  } else if (NOTE_PITCHES[baseNoteNumber] > myNotePitch) {
-    // The pitch of the base note is higher, so our note should be a flat
+  } else if (addPitch(NOTE_PITCHES[baseNoteNumber], 2) === myNotePitch) {
+    // The pitch of the base note is two semitones lower, so our note should be double sharp
+    return `${Note[baseNoteNumber]}${ACCIDENTALS[Accidental.SHARP]}${
+      ACCIDENTALS[Accidental.SHARP]
+    }`;
+  } else if (NOTE_PITCHES[baseNoteNumber] === addPitch(myNotePitch, 1)) {
+    // The pitch of the base note is one semitone higher, so our note should be a flat
     return `${Note[baseNoteNumber]}${ACCIDENTALS[Accidental.FLAT]}`;
+  } else if (NOTE_PITCHES[baseNoteNumber] === addPitch(myNotePitch, 2)) {
+    // The pitch of the base note is two semitones higher, so our note should be a double flat
+    return `${Note[baseNoteNumber]}${ACCIDENTALS[Accidental.FLAT]}${
+      ACCIDENTALS[Accidental.FLAT]
+    }`;
   } else {
     // The note is the same, so the target note is the natural note
     return Note[baseNoteNumber];
@@ -122,4 +132,8 @@ export const pitchFromTwentyOneNote = (note: TwentyOneNote) => {
   } else {
     return basePitch;
   }
+};
+
+export const addPitch = (baseNote: number, addend: number) => {
+  return (baseNote + addend) % 12;
 };
