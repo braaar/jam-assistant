@@ -1,16 +1,16 @@
 import { Select } from "theme-ui";
-import { TwentyOneNote } from "../../18th-century-europe/twenty-one-notes";
+import { Note21 } from "../../18th-century-europe/note";
 
 export interface KeyCenterSelectorProps {
-  keyCenter: TwentyOneNote;
-  setKeyCenter: (keyCenter: TwentyOneNote) => void;
+  keyCenter: Note21;
+  setKeyCenter: (keyCenter: Note21) => void;
 }
 
 export const KeyCenterSelector: React.FC<KeyCenterSelectorProps> = ({
   keyCenter,
   setKeyCenter,
 }) => {
-  const keyCenters = Object.values(TwentyOneNote).filter(
+  const keyCenters = Object.values(Note21).filter(
     (value) => typeof value === "string"
   );
 
@@ -18,9 +18,7 @@ export const KeyCenterSelector: React.FC<KeyCenterSelectorProps> = ({
     <>
       <Select
         onChange={(event) =>
-          setKeyCenter(
-            TwentyOneNote[event.target.value as keyof typeof TwentyOneNote]
-          )
+          setKeyCenter(Note21[event.target.value as keyof typeof Note21])
         }
         sx={{ minWidth: "80px" }}
       >

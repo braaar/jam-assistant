@@ -1,14 +1,24 @@
-import { Chord } from "../18th-century-europe/chord";
-import { ChordFunction } from "../18th-century-europe/chord-function";
-import { ACCIDENTALS, CHORD_SYMBOLS } from "../18th-century-europe/engraving";
-import { Note, NOTE_PITCHES } from "../18th-century-europe/note";
-import { Mode } from "../18th-century-europe/mode";
-import { SCALES, SCALE_INTERVALS } from "../18th-century-europe/scales";
-import { chords, extensions } from "./data";
+import { Chord, ChordFunction } from "../18th-century-europe/chord";
+
 import {
-  TwentyOneNote,
-  TWENTY_ONE_NOTES,
-} from "../18th-century-europe/twenty-one-notes";
+  getAccidentalSymbol,
+  getNoteSymbol,
+  getTriadSymbol,
+} from "../18th-century-europe/engraving";
+import {
+  getNote7FromNote21,
+  getNoteDataFromNote21,
+  getNote12FromNote7,
+  Note7,
+  Note21,
+  NoteDegree,
+} from "../18th-century-europe/note";
+import { Mode } from "../18th-century-europe/mode";
+import {
+  getNote12FromModeAndDegree,
+  getTriad,
+} from "../18th-century-europe/scales";
+import { chords, extensions } from "./data";
 import { Interval } from "../18th-century-europe/interval";
 import { Accidental } from "../18th-century-europe/accidental";
 
@@ -35,30 +45,30 @@ export const generateChord = () => {
 
 export const getNewChordWithinKey = (
   mode: Mode,
-  center: TwentyOneNote,
-  chordBase: Chord[]
+  center: Note21,
+  currentChords: string[]
 ) => {
   const index = randomInteger(0, 6);
 
-  return engraveChord(chordBase[index], center, mode);
+  const newChord = engraveChord(index, center, mode);
+
+  return newChord;
 };
 
-export const engraveChords = (
-  chords: Chord[],
-  center: TwentyOneNote,
-  mode: Mode
-) => {
-  return chords.map((chord) => engraveChord(chord, center, mode));
+export const engraveChords = (chords: Chord[], center: Note21, mode: Mode) => {
+  return chords.map((chord) =>
+    engraveChord(chord.function.valueOf(), center, mode)
+  );
 };
 
+/** Writes a human readable chord baed on the chord object */
 export const engraveChord = (
-  chord: Chord,
-  center: TwentyOneNote,
+  noteDegree: NoteDegree,
+  center: Note21,
   mode: Mode
 ) => {
-  const scale = SCALES[mode];
-  const triad = scale[chord.function];
-  return `${getNote(chord.function, center, mode)}${CHORD_SYMBOLS[triad]}`;
+  const triad = getTriad(noteDegree, mode);
+  return `${getNote(noteDegree, center, mode)}${getTriadSymbol(triad)}`;
 };
 
 /** Get a note in a scale given its position, the key center and the mode of the scale
@@ -68,45 +78,40 @@ export const engraveChord = (
  * @returns a string containing the note name and accidental (e.g. `'C#'`)
  */
 export const getNote = (
-  numberInScale: ChordFunction,
-  center: TwentyOneNote,
+  numberInScale: NoteDegree,
+  center: Note21,
   mode: Mode
 ) => {
-  const centerPitch = pitchFromTwentyOneNote(center);
-
-  const scaleIntervals = SCALE_INTERVALS[mode];
-
-  const intervalsToAddTogether = scaleIntervals.slice(0, numberInScale);
-
-  // Adds together the intervals in that scale to get to the right pitch (number from 0-11) for the target note
-  const myNotePitch =
-    intervalsToAddTogether.reduce((sum, currentInterval) => {
-      return sum + currentInterval;
-    }, centerPitch) % 12;
+  const myNotePitch = getNote12FromModeAndDegree(center, numberInScale, mode);
 
   // The base note number from (0-6) of the target note
-  const baseNoteNumber = (TWENTY_ONE_NOTES[center].note + numberInScale) % 7;
+  const baseNoteNumber = (getNote7FromNote21(center) + numberInScale) % 7;
 
+  const baseNotePitch = getNote12FromNote7(baseNoteNumber);
   //check to see if the note name matches the note name we get from eleven notes
-  if (addPitch(NOTE_PITCHES[baseNoteNumber], 1) === myNotePitch) {
-    // The pitch of the base note is one semitone lower, so our note should be a sharp
-    return `${Note[baseNoteNumber]}${ACCIDENTALS[Accidental.SHARP]}`;
-  } else if (addPitch(NOTE_PITCHES[baseNoteNumber], 2) === myNotePitch) {
-    // The pitch of the base note is two semitones lower, so our note should be double sharp
-    return `${Note[baseNoteNumber]}${ACCIDENTALS[Accidental.SHARP]}${
-      ACCIDENTALS[Accidental.SHARP]
-    }`;
-  } else if (NOTE_PITCHES[baseNoteNumber] === addPitch(myNotePitch, 1)) {
-    // The pitch of the base note is one semitone higher, so our note should be a flat
-    return `${Note[baseNoteNumber]}${ACCIDENTALS[Accidental.FLAT]}`;
-  } else if (NOTE_PITCHES[baseNoteNumber] === addPitch(myNotePitch, 2)) {
-    // The pitch of the base note is two semitones higher, so our note should be a double flat
-    return `${Note[baseNoteNumber]}${ACCIDENTALS[Accidental.FLAT]}${
-      ACCIDENTALS[Accidental.FLAT]
-    }`;
+  if (addSemitones(baseNotePitch, 1) === myNotePitch) {
+    // Note should be a sharp
+    return `${getNoteSymbol(baseNoteNumber)}${getAccidentalSymbol(
+      Accidental.SHARP
+    )}`;
+  } else if (addSemitones(baseNotePitch, 2) === myNotePitch) {
+    // Note should be double sharp
+    return `${getNoteSymbol(baseNoteNumber)}${getAccidentalSymbol(
+      Accidental.SHARP
+    )}${getAccidentalSymbol(Accidental.SHARP)}`;
+  } else if (baseNotePitch === addSemitones(myNotePitch, 1)) {
+    // Note should be a flat
+    return `${getNoteSymbol(baseNoteNumber)}${getAccidentalSymbol(
+      Accidental.FLAT
+    )}`;
+  } else if (baseNotePitch === addSemitones(myNotePitch, 2)) {
+    // Note should be a double flat
+    return `${getNoteSymbol(baseNoteNumber)}${getAccidentalSymbol(
+      Accidental.FLAT
+    )}${getAccidentalSymbol(Accidental.FLAT)}`;
   } else {
     // The note is the same, so the target note is the natural note
-    return Note[baseNoteNumber];
+    return Note7[baseNoteNumber];
   }
 };
 
@@ -120,10 +125,14 @@ export const pitchFromBaseAndInterval = (base: number, interval: Interval) => {
   return (base + interval) % 12;
 };
 
-/** Returns a number from 0 to 11 representing the pitch in 12 TET (from C=0 to B=11) */
-export const pitchFromTwentyOneNote = (note: TwentyOneNote) => {
-  const basePitch = NOTE_PITCHES[TWENTY_ONE_NOTES[note].note];
-  const accidental = TWENTY_ONE_NOTES[note].accidental;
+/**
+ * @param note number from 0 to 20 representing the note in the 21-note system
+ * @returns a number from 0 to 11 representing the pitch in 12 TET (from C=0 to B=11)
+ */
+export const pitchFromTwentyOneNote = (note: Note21) => {
+  const noteData = getNoteDataFromNote21(note);
+  const basePitch = getNote12FromNote7(noteData.note);
+  const accidental = noteData.accidental;
 
   if (accidental === Accidental.FLAT) {
     return (basePitch + 12 - 1) % 12; //adding 11 so we don't risk getting a negative number
@@ -134,6 +143,12 @@ export const pitchFromTwentyOneNote = (note: TwentyOneNote) => {
   }
 };
 
-export const addPitch = (baseNote: number, addend: number) => {
-  return (baseNote + addend) % 12;
+/**
+ *
+ * @param baseNote a note in the Note12 system, from 0=C to 11=B
+ * @param semitones the amount of semitones to add
+ * @returns
+ */
+export const addSemitones = (baseNote: number, semitones: number) => {
+  return (baseNote + semitones) % 12;
 };
