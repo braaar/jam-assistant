@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Box, Button, Flex, Heading, Paragraph } from "theme-ui";
-import { Chord, ChordFunction } from "./18th-century-europe/chord";
 import { Mode } from "./18th-century-europe/mode";
 import { Note21 } from "./18th-century-europe/note";
 import { ChordList } from "./components/chord-list";
