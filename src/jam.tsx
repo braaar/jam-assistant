@@ -28,16 +28,6 @@ export const Jam: React.FC = () => {
     setChords([]);
   };
 
-  const chordBase: Chord[] = [
-    { function: ChordFunction.I },
-    { function: ChordFunction.II },
-    { function: ChordFunction.III },
-    { function: ChordFunction.IV },
-    { function: ChordFunction.V },
-    { function: ChordFunction.VI },
-    { function: ChordFunction.VII },
-  ];
-
   return (
     <Box>
       <Heading>Let's Jam</Heading>

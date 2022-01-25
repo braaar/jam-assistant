@@ -1,4 +1,4 @@
-import { Chord, ChordFunction } from "../18th-century-europe/chord";
+import { Chord } from "../18th-century-europe/chord";
 
 import {
   getAccidentalSymbol,
