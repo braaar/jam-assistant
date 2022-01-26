@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Box, Button, Flex, Heading, Paragraph } from "theme-ui";
 import { Mode } from "./18th-century-europe/mode";
 import { Note21 } from "./18th-century-europe/note";
-import { ChordList } from "./components/chord-list";
+import { ChordList } from "./components/jam/chord-list";
 import { KeyCenterSelector } from "./components/jam/key-center-selector";
 import { ModeSelector } from "./components/jam/mode-selector";
 import { getNewChordWithinKey } from "./services/chord-helpers";
