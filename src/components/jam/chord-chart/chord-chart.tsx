@@ -1,7 +1,5 @@
-import { Badge, Box, Grid, Text } from "theme-ui";
-import { Bar } from "./bar";
+import { Grid } from "theme-ui";
 import { ChartLine } from "./chart-line";
-import { ChordSymbol } from "./chord-symbol";
 
 export interface ChordChartProps {
   chords: string[];
