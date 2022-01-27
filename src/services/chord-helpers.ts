@@ -45,14 +45,18 @@ export const generateChord = () => {
 
 export const getNewChordWithinKey = (
   mode: Mode,
-  center: Note21,
+  center: Note21 | null,
   currentChords: string[]
 ) => {
   const index = randomInteger(0, 6);
 
-  const newChord = engraveChord(index, center, mode);
-
-  return newChord;
+  if (center) {
+    return engraveChord(index, center, mode);
+  } else {
+    const keyIndex = randomInteger(0, 20);
+    const keyCenter = Note21[keyIndex];
+    return engraveChord(index, Note21[keyCenter as keyof typeof Note21], mode);
+  }
 };
 
 export const engraveChords = (chords: Chord[], center: Note21, mode: Mode) => {
