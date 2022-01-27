@@ -10,7 +10,7 @@ import { getNewChordWithinKey } from "./services/chord-helpers";
 export const Jam: React.FC = () => {
   const [chords, setChords] = useState<string[]>([]);
   const [mode, setMode] = useState<Mode>(Mode.IONIAN);
-  const [keyCenter, setKeyCenter] = useState<Note21>(Note21.C_NATURAL);
+  const [keyCenter, setKeyCenter] = useState<Note21 | null>(Note21.C_NATURAL);
 
   const addChord = () => {
     const newChord = getNewChordWithinKey(mode, keyCenter, chords);

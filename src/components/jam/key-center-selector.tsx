@@ -2,8 +2,8 @@ import { Select } from "theme-ui";
 import { Note21 } from "../../18th-century-europe/note";
 
 export interface KeyCenterSelectorProps {
-  keyCenter: Note21;
-  setKeyCenter: (keyCenter: Note21) => void;
+  keyCenter: Note21 | null;
+  setKeyCenter: (keyCenter: Note21 | null) => void;
 }
 
 export const KeyCenterSelector: React.FC<KeyCenterSelectorProps> = ({
@@ -14,14 +14,18 @@ export const KeyCenterSelector: React.FC<KeyCenterSelectorProps> = ({
     (value) => typeof value === "string"
   );
 
+  const onChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    if (event.target.value === "Chromatic") {
+      setKeyCenter(null);
+    } else {
+      setKeyCenter(Note21[event.target.value as keyof typeof Note21]);
+    }
+  };
+
   return (
     <>
-      <Select
-        onChange={(event) =>
-          setKeyCenter(Note21[event.target.value as keyof typeof Note21])
-        }
-        sx={{ minWidth: "80px" }}
-      >
+      <Select onChange={onChange} sx={{ minWidth: "80px" }}>
+        <option key={"Chromatic"}>Chromatic</option>
         {keyCenters.map((key) => (
           <option key={key} value={key}>
             {`${key.toString().charAt(0)}${key
