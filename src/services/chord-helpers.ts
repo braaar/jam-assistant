@@ -43,11 +43,7 @@ export const generateChord = () => {
   return newChord;
 };
 
-export const getNewChordWithinKey = (
-  mode: Mode,
-  center: Note21,
-  currentChords: string[]
-) => {
+export const getNewChordWithinKey = (mode: Mode, center: Note21) => {
   const index = randomInteger(0, 6);
 
   const newChord = engraveChord(index, center, mode);

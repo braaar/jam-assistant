@@ -1,7 +1,7 @@
 import { Text, ThemeUIStyleObject } from "theme-ui";
 
 export interface ChordSymbolProps {
-  chord: string;
+  chord?: string;
   sx?: ThemeUIStyleObject;
 }
 export const ChordSymbol: React.FC<ChordSymbolProps> = ({ chord, sx }) => {
