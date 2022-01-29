@@ -1,12 +1,12 @@
 {
   "files": {
-    "main.js": "/jam-assistant/static/js/main.149f50dd.js",
+    "main.js": "/jam-assistant/static/js/main.123057df.js",
     "static/js/787.cfe551f5.chunk.js": "/jam-assistant/static/js/787.cfe551f5.chunk.js",
     "index.html": "/jam-assistant/index.html",
-    "main.149f50dd.js.map": "/jam-assistant/static/js/main.149f50dd.js.map",
+    "main.123057df.js.map": "/jam-assistant/static/js/main.123057df.js.map",
     "787.cfe551f5.chunk.js.map": "/jam-assistant/static/js/787.cfe551f5.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/main.149f50dd.js"
+    "static/js/main.123057df.js"
   ]
 }
