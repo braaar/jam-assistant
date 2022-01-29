@@ -14,6 +14,9 @@ export const ACCIDENTALS: Record<Accidental, string> = {
   [Accidental.SHARP]: "♯",
   [Accidental.FLAT]: "♭",
 };
+
+export type ChordWithDuration = { symbol: string; duration: number };
+
 /** Returns a string symbol representing a type of triad, such as `'m'`*/
 export const getTriadSymbol = (triad: Triad) => {
   return CHORD_SYMBOLS[triad];

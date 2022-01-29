@@ -1,29 +1,28 @@
 import { Box } from "theme-ui";
+import { ChordWithDuration } from "../../../18th-century-europe/engraving";
 import { Bar } from "./bar";
-import { ChordSymbol } from "./chord-symbol";
+import { divideChordsIntoLists } from "./chord-chart";
 
 export interface ChartLineProps {
-  chords: string[];
+  chords: ChordWithDuration[];
 }
 
-export const ChartLine: React.FC<ChartLineProps> = ({ chords }) => (
-  <>
-    <Box sx={{ bg: "#000000", borderRadius: 2 }} />
-    <Bar>
-      <ChordSymbol chord={chords[0]} />
-    </Bar>
-    <Box sx={{ bg: "#000000", borderRadius: 2 }} />
-    <Bar>
-      <ChordSymbol chord={chords[1]} />
-    </Bar>
-    <Box sx={{ bg: "#000000", borderRadius: 2 }} />
-    <Bar>
-      <ChordSymbol chord={chords[2]} />
-    </Bar>
-    <Box sx={{ bg: "#000000", borderRadius: 2 }} />
-    <Bar>
-      <ChordSymbol chord={chords[3]} />
-    </Bar>
-    <Box sx={{ bg: "#000000", borderRadius: 2 }} />
-  </>
-);
+export const ChartLine: React.FC<ChartLineProps> = ({ chords }) => {
+  // do stuff based on duration
+
+  const chordsInBars = divideChordsIntoLists(chords, 4.0);
+
+  return (
+    <>
+      <Box sx={{ bg: "#000000", borderRadius: 2 }} />
+      <Bar chords={chordsInBars[0]} />
+      <Box sx={{ bg: "#000000", borderRadius: 2 }} />
+      <Bar chords={chordsInBars[1]} />
+      <Box sx={{ bg: "#000000", borderRadius: 2 }} />
+      <Bar chords={chordsInBars[2]} />
+      <Box sx={{ bg: "#000000", borderRadius: 2 }} />
+      <Bar chords={chordsInBars[3]} />
+      <Box sx={{ bg: "#000000", borderRadius: 2 }} />
+    </>
+  );
+};

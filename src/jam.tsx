@@ -1,21 +1,23 @@
 import React, { useState } from "react";
 import { Box, Button, Flex, Heading, Paragraph } from "theme-ui";
+import { ChordWithDuration } from "./18th-century-europe/engraving";
 import { Mode } from "./18th-century-europe/mode";
 import { Note21 } from "./18th-century-europe/note";
 import { ChordList } from "./components/jam/chord-list";
 import { KeyCenterSelector } from "./components/jam/key-center-selector";
 import { ModeSelector } from "./components/jam/mode-selector";
-import { getNewChordWithinKey } from "./services/chord-helpers";
+import { getNewChordWithinKey, randomInteger } from "./services/chord-helpers";
 
 export const Jam: React.FC = () => {
-  const [chords, setChords] = useState<string[]>([]);
+  const [chords, setChords] = useState<ChordWithDuration[]>([]);
   const [mode, setMode] = useState<Mode>(Mode.IONIAN);
   const [keyCenter, setKeyCenter] = useState<Note21>(Note21.C_NATURAL);
 
   const addChord = () => {
-    const newChord = getNewChordWithinKey(mode, keyCenter, chords);
+    const newChord = getNewChordWithinKey(mode, keyCenter);
 
-    const newList = [...chords, newChord];
+    const withDuration = { symbol: newChord, duration: randomInteger(1, 4) };
+    const newList = [...chords, withDuration];
     setChords(newList);
   };
 
