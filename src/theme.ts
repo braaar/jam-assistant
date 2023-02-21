@@ -58,8 +58,8 @@ export const theme = {
     tinyHeading: {
       lineHeight: "heading",
       fontWeight: "light",
-      fontSize: 4,
-      py: 2,
+      fontSize: 3,
+      py: 3,
     },
     tinyHeadline: {
       lineHeight: "heading",
