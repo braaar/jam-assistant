@@ -61,6 +61,12 @@ export const theme = {
       fontSize: 3,
       py: 3,
     },
+    mediumHeading: {
+      lineHeight: "heading",
+      fontWeight: "light",
+      fontSize: 5,
+      py: 3,
+    },
     tinyHeadline: {
       lineHeight: "heading",
       fontWeight: "heading",
