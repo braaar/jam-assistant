@@ -1,11 +1,31 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { App } from "./App";
+import { Jam } from "./jam";
+import { About } from "./components/about"
 import reportWebVitals from "./reportWebVitals";
+
+const router = createBrowserRouter([
+  {
+    path: '/jam-assistant',
+    element: <App></App>,
+    children: [
+      {
+        index: true,
+        element: <Jam></Jam>
+      },
+      {
+        path: 'about',
+        element: <About></About>
+      }
+    ]
+  }
+])
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={router} />
   </React.StrictMode>,
   document.getElementById("root")
 );
